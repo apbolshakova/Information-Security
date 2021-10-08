@@ -1,6 +1,6 @@
 #include "Header.h"
 
-cryptogram_t* initCryptogram(char* DATA_PATH)
+cryptogram_t* initCryptogram(char* dataPath)
 {
 	cryptogram_t* data = (cryptogram_t*)malloc(sizeof(cryptogram_t));
 	if (data == NULL) return NULL;
@@ -12,10 +12,10 @@ cryptogram_t* initCryptogram(char* DATA_PATH)
 		return NULL;
 	}
 
-	FILE *f = fopen(DATA_PATH, "r");
+	FILE *f = fopen(dataPath, "r");
 	if ((f != NULL) && (fgetc(f) != EOF) && !(feof(f)))
 	{
-		initText(data, f, DATA_PATH);
+		initText(data, f, dataPath);
 	}
 	fclose(f);
 	parseTextIntoWords(data);

@@ -5,17 +5,10 @@ int main(void)
 	setlocale(LC_ALL, "rus");
 	cryptogram_t* data = NULL;
 
-	FILE* fSrc;
 	printf("Enter name of file with source code (up to 255 characters):\n");
 	char* srcFileName = getFileName();
-	
-	if (!srcFileName)
-	{
-		printf("ERROR: unable to get file name.\n");
-		return FAIL;
-	}
-	
-	data = initCryptogram(fSrc);
+
+	data = initCryptogram(srcFileName);
 
 	// Цикл пока a и b корректные:
 	//     Для каждого из самых длинных 20 слов:
@@ -26,7 +19,6 @@ int main(void)
 	//     Иначе 
 	//		   Установить следующие подходящие (a, b)
 	//         Обновить словарь замены 
-	fclose(fSrc);
 	return 0;
 }
 

@@ -1,9 +1,9 @@
 #include "Header.h"
 
-void initText(cryptogram_t* data, FILE* f, char* DATA_PATH)
+void initText(cryptogram_t* data, FILE* f, char* dataPath)
 {
 	fclose(f);
-	f = fopen(DATA_PATH, "r");
+	f = fopen(dataPath, "r");
 	if (f == NULL) return;
 	long int fileSize = getFileSize(f);
 	char* temp = (char*)calloc(fileSize, sizeof(char));

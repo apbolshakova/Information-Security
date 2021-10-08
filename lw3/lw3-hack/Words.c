@@ -16,7 +16,7 @@ void parseTextIntoWords(cryptogram_t* data)
 void addWordToList(cryptogram_t* data)
 {
 	words_list_item_t* newWord = (words_list_item_t*)malloc(sizeof(words_list_item_t));
-	if (newWord == NULL) return NULL;
+	if (newWord == NULL) return;
 	handleWordData(newWord, data);
 	if (wordIsUnique(newWord, data->wordListHead))
 	{
@@ -81,7 +81,7 @@ void printWords(cryptogram_t* data)
 	words_list_item_t* word = data->wordListHead;
 	int prevValue = word->len;
 	printf("По %i:\n", prevValue);
-	printCharsWithEncryption(word->chars, data);
+	printDecodedWord(word->chars, data);
 
 	word = word->next;
 	while (word != NULL)
@@ -89,14 +89,14 @@ void printWords(cryptogram_t* data)
 		int nextValue = word->len;
 
 		if (nextValue != prevValue) printf("\nПо %i:\n", nextValue);
-		printCharsWithEncryption(word->chars, data);
+		printDecodedWord(word->chars, data);
 
 		word = word->next;
 		prevValue = nextValue;
 	}
 }
 
-void printCharsWithEncryption(char* ptr, cryptogram_t* data)
+void printDecodedWord(char* ptr, cryptogram_t* data)
 {
 	while (*ptr)
 	{
