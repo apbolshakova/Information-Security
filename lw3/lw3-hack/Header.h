@@ -12,9 +12,10 @@
 #define ALPHABET_SIZE 32
 #define NO_LETTERS '\0'
 #define END_OF_OPTIONS -1
-#define NUM_OF_WORD_TO_ANALIZE 30
+#define NUM_OF_WORD_TO_ANALIZE 20
 #define RUSSIAN_DICTIONARY_FILE_PATH "russian.txt"
 #define REQUIRED_CORRECT_WORDS 5
+#define CONTINUE_BTN_CODE 32
 
 void setNextA(cryptogram_t* data);
 void setNextB(cryptogram_t* data);

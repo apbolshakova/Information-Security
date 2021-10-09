@@ -6,23 +6,27 @@ int main(void) {
 
 	char* russianWords = getTextFromFile(RUSSIAN_DICTIONARY_FILE_PATH, TRUE_);
 
-	printf("Введите путь до файла с зашифрованным текстом (до 255 символов):\n");
-	char* srcFileName = getFileName();
+	char operationCode = 0;
+	do
+	{
+		system("cls");
+		printf("Введите путь до файла с зашифрованным текстом (до 255 символов):\n");
+		char* srcFileName = getFileName();
 
-	data = initCryptogram(srcFileName);
+		data = initCryptogram(srcFileName);
 
-	if (!data) {
-		printf("Произошла ошибка при иниицализации. Нажмите любую кнопку для выхода.\n");
-		_getch();
-		return 0;
-	}
+		if (data) {
+			data->wordListHead = sortWordsByLen(data->wordListHead);
+			handleMainCycle(data, russianWords);
+		}
+		cleanMemory(data);
 
-	data->wordListHead = sortWordsByLen(data->wordListHead);
-	printDecodedWords(data);
+		printf("Работа программы завершена!\nНажмите пробел для взлома другого файла или любую другую клавишу для выхода.\n");
+		operationCode = _getch();
+	} while (operationCode == CONTINUE_BTN_CODE);
 
-	handleMainCycle(data, russianWords);
-	cleanMemory(data);
-	_getch();
+	russianWords = NULL;
+	free(russianWords);
 	return 0;
 }
 
@@ -37,18 +41,14 @@ char* getFileName() {
 }
 
 void handleMainCycle(cryptogram_t* data, char* russianWords) {
-// Цикл пока a и b корректные:
-//     Для первых 20 слов из списка:
-//         Заменить буквы по текущим (a, b)
-//         Проверить, есть ли такое слово в словаре
-// 	           Если есть, увеличить счётчик корректных слов на единицу
-//     Если найдено 10+ корректных слов, то выводим пользователю текст с заменами и вопрос: выйти или продолжать
-//         Если пользователь говорит, что выйти
-// 	           Выходим из цикла
-//     Установить следующие подходящие (a, b)
-//     Обновить словарь замены
-//     Установить счётчик корректных слов в 0
-// Если a или b установлено в некорректное, то выводим сообщение о неудаче
+	// Цикл пока a и b корректные:
+	//     Для первых 20 слов из списка:
+	//         Заменить буквы по текущим (a, b)
+	//         Проверить, есть ли такое слово в словаре
+	// 	           Если есть, увеличить счётчик корректных слов на единицу
+	//     Если найдено 5+ корректных слов, то выводим пользователю найденные слова и просим нажать пробел для продолжения
+	//     Установить следующие подходящие (a, b)
+	//     Обновить словарь замены
 
 	while (data->aCoefficient != END_OF_OPTIONS && data->bCoefficient != END_OF_OPTIONS) {
 		system("cls");
@@ -69,10 +69,9 @@ void handleMainCycle(cryptogram_t* data, char* russianWords) {
 		}
 
 		if (foundWords >= REQUIRED_CORRECT_WORDS) {
-			printf("Обнаружены предположительные коэффициенты: a - %i, b - %i!\nВведите 1 для выхода или 2 для продолжения поиска.", 
-				data->aCoefficient, data->bCoefficient);
-			// TODO
-			_getch();
+			printf("Обнаружены предположительные коэффициенты: a - %i, b - %i!\n", data->aCoefficient, data->bCoefficient);
+			printf("Советуем попробовать декодирование с ними.\nВведите пробел для продолжения поиска.");
+			while (_getch() != CONTINUE_BTN_CODE);
 		}
 
 		setNextB(data);
