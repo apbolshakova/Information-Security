@@ -12,7 +12,9 @@
 #define ALPHABET_SIZE 32
 #define NO_LETTERS '\0'
 #define END_OF_OPTIONS -1
-#define NUM_OF_WORD_TO_ANALIZE 20
+#define NUM_OF_WORD_TO_ANALIZE 30
+#define RUSSIAN_DICTIONARY_FILE_PATH "russian.txt"
+#define REQUIRED_CORRECT_WORDS 5
 
 void setNextA(cryptogram_t* data);
 void setNextB(cryptogram_t* data);
@@ -31,10 +33,10 @@ bool_t isRussianLowercaseLetter(char item);
 bool_t isLetter(char item);
 
 char* getFileName();
-void handleMainCycle(cryptogram_t* data);
+void handleMainCycle(cryptogram_t* data, char* russianWords);
 
-void initText(cryptogram_t* data, FILE* f, char* dataPath);
-void saveDataFromString(cryptogram_t* data, char* str);
+char* getTextFromFile(char* dataPath, bool_t showLoadingProcess);
+void saveDataFromString(char* text, char* strToSave, bool_t showLoadingProcess, char* charForLoadingInfo);
 void printText(cryptogram_t* data);
 long int getFileSize(FILE* f);
 
@@ -42,7 +44,8 @@ void parseTextIntoWords(cryptogram_t* data);
 void addWordToList(cryptogram_t* data);
 void handleWordData(words_list_item_t* newWord, cryptogram_t* data);
 words_list_item_t* sortWordsByLen(words_list_item_t* firstWord);
-void printWords(cryptogram_t* data);
+char* getDecodedWord(words_list_item_t* word, cryptogram_t* data);
+void printDecodedWords(cryptogram_t* data);
 void printDecodedWord(char* ptr, cryptogram_t* data);
 void cleanWordsList(cryptogram_t* data);
 bool_t wordIsUnique(words_list_item_t* newWord, words_list_item_t* head);

@@ -1,8 +1,9 @@
 #include "Header.h"
 
 void setNextA(cryptogram_t* data) {
-	int newA = data->aCoefficient++;
-	if (newA < 1 || newA >= ALPHABET_SIZE || getNOD(newA, ALPHABET_SIZE) != 1) {
+	int newA = ++(data->aCoefficient);
+	while (getNOD(newA, ALPHABET_SIZE) != 1) newA++;
+	if (newA < 1 || newA >= ALPHABET_SIZE) {
 		data->aCoefficient = END_OF_OPTIONS;
 	}
 	else {
@@ -11,7 +12,7 @@ void setNextA(cryptogram_t* data) {
 }
 
 void setNextB(cryptogram_t* data) {
-	int newB = data->bCoefficient++;
+	int newB = ++(data->bCoefficient);
 	if (newB < 0 || newB >= ALPHABET_SIZE) {
 		data->bCoefficient = END_OF_OPTIONS;
 	}

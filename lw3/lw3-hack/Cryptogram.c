@@ -19,11 +19,15 @@ cryptogram_t* initCryptogram(char* dataPath) {
 		free(data);
 		return NULL;
 	}
+	fclose(f);
 
-	initText(data, f, dataPath);
-	
-	if (f != NULL) {
-		fclose(f);
+	data->text = getTextFromFile(dataPath, FALSE_);
+	if (data->text == NULL) {
+		data->decodeDictionary = NULL;
+		free(data->decodeDictionary);
+		data = NULL;
+		free(data);
+		return NULL;
 	}
 	
 	data->wordListHead = NULL;

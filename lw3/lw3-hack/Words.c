@@ -31,7 +31,12 @@ void handleWordData(words_list_item_t* newWord, cryptogram_t* data) {
 	data->text = textSav;
 	char* charsSav = newWord->chars;
 	while (isLetter(*data->text)) {
-		*(newWord->chars) = *data->text;
+		if (isRussianCapitalLetter(*data->text)) {
+			*(newWord->chars) = *data->text - 'À' + 'à';
+		}
+		else {
+			*(newWord->chars) = *data->text;
+		}
 		data->text++;
 		newWord->chars++;
 	}
@@ -61,7 +66,7 @@ words_list_item_t* sortWordsByLen(words_list_item_t* firstWord) {
 	return newfirstWord;
 }
 
-void printWords(cryptogram_t* data) {
+void printDecodedWords(cryptogram_t* data) {
 	system("cls");
 
 	words_list_item_t* word = data->wordListHead;
@@ -79,6 +84,22 @@ void printWords(cryptogram_t* data) {
 		word = word->next;
 		prevValue = nextValue;
 	}
+}
+
+char* getDecodedWord(words_list_item_t* word, cryptogram_t* data) {
+	char* decodedWord = (char*)calloc(word->len, sizeof(char));
+	if (!decodedWord) return NULL;
+	
+	char* sav = decodedWord;
+	char* letterPtr = word->chars;
+	while (*letterPtr) {
+		*decodedWord = getDecodedLetter(*letterPtr, data->decodeDictionary);
+		
+		letterPtr++;
+		decodedWord++;
+	}
+	*decodedWord = '\0';
+	return sav;
 }
 
 void printDecodedWord(char* ptr, cryptogram_t* data) {
