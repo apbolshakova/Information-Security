@@ -12,12 +12,24 @@ cryptogram_t* initCryptogram(char* dataPath)
 		return NULL;
 	}
 
-	FILE *f = fopen(dataPath, "r");
-	if ((f != NULL) && (fgetc(f) != EOF) && !(feof(f)))
+	FILE* f = fopen(dataPath, "r");
+	if ((f == NULL) || (fgetc(f) == EOF) || (feof(f))) 
 	{
-		initText(data, f, dataPath);
+		data->decodeDictionary = NULL;
+		free(data->decodeDictionary);
+		data = NULL;
+		free(data);
+		return NULL;
 	}
-	fclose(f);
+
+	initText(data, f, dataPath);
+	
+	if (f != NULL)
+	{
+		fclose(f);
+	}
+	
+	data->wordListHead = NULL;
 	parseTextIntoWords(data);
 
 	data->aCoefficient = 1;

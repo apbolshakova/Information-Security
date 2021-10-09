@@ -3,8 +3,6 @@
 void parseTextIntoWords(cryptogram_t* data)
 {
 	char* sav = data->text;
-	while (*data->text && !isLetter(*data->text)) data->text++;
-	if (isLetter(*data->text)) addWordToList(data);
 	while (*data->text)
 	{
 		while (*data->text && !isLetter(*data->text)) data->text++;

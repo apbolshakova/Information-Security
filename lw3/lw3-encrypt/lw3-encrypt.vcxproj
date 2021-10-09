@@ -24,7 +24,7 @@
     <ProjectGuid>{b493446b-944a-4406-b045-4d9fcc21b423}</ProjectGuid>
     <RootNamespace>lw3encrypt</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>lw3-hack</ProjectName>
+    <ProjectName>lw3-encrypt</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
