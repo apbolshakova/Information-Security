@@ -7,8 +7,7 @@ int main(void) {
 	char* russianWords = getTextFromFile(RUSSIAN_DICTIONARY_FILE_PATH, TRUE_);
 
 	char operationCode = 0;
-	do
-	{
+	do {
 		system("cls");
 		printf("Введите путь до файла с зашифрованным текстом (до 255 символов):\n");
 		char* srcFileName = getFileName();
@@ -18,8 +17,8 @@ int main(void) {
 		if (data) {
 			data->wordListHead = sortWordsByLen(data->wordListHead);
 			handleMainCycle(data, russianWords);
+			cleanMemory(data);
 		}
-		cleanMemory(data);
 
 		printf("Работа программы завершена!\nНажмите пробел для взлома другого файла или любую другую клавишу для выхода.\n");
 		operationCode = _getch();
@@ -41,15 +40,6 @@ char* getFileName() {
 }
 
 void handleMainCycle(cryptogram_t* data, char* russianWords) {
-	// Цикл пока a и b корректные:
-	//     Для первых 20 слов из списка:
-	//         Заменить буквы по текущим (a, b)
-	//         Проверить, есть ли такое слово в словаре
-	// 	           Если есть, увеличить счётчик корректных слов на единицу
-	//     Если найдено 5+ корректных слов, то выводим пользователю найденные слова и просим нажать пробел для продолжения
-	//     Установить следующие подходящие (a, b)
-	//     Обновить словарь замены
-
 	while (data->aCoefficient != END_OF_OPTIONS && data->bCoefficient != END_OF_OPTIONS) {
 		system("cls");
 		printEncryptionKey(data);
