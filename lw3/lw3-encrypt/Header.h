@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <locale.h>
 
 #define LEN 256
 #define LEN_CODE "%255s"
@@ -11,8 +12,7 @@ typedef enum Status_ { FAIL, SUCCESS } status_t;
 typedef enum Bool_ { FALSE_, TRUE_ } bool_t;
 typedef enum Mode_ { ENCRYPT_, DECRYPT_ } mode_t;
 
-char* getSrcFileName();
-char* getResFileName();
+char* getFileName();
 int getA();
 int getNOD(int n1, int n2);
 int getB();

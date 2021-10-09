@@ -2,24 +2,27 @@
 
 int main(void)
 {
+	setlocale(LC_ALL, "rus");
 	FILE* fSrc;
 	FILE* fRes;
-	char* srcFileName = getSrcFileName();
-	char* resFileName = getResFileName();
+	printf("Введите название файла с исходным текстом (до 255 символов):\n");
+	char* srcFileName = getFileName();
+	printf("Введите название файл для сохранения результата (до 255 символов):\n");
+	char* resFileName = getFileName();
 	
 	if (!srcFileName || !resFileName)
 	{
-		printf("ERROR: unable to get file name.\n");
+		printf("Ошибка: отсутствует название одного из файлов.\n");
 		return FAIL;
 	}
 	if (!(fSrc = fopen(srcFileName, "r")))
 	{
-		printf("ERROR: unable to open file.\n");
+		printf("Ошибка при открытии файла с исходным текстом.\n");
 		return FAIL;
 	}
 	if (!(fRes = fopen(resFileName, "w")))
 	{
-		printf("ERROR: unable to open file.\n");
+		printf("Ошибка при создании файла для записи результата.\n");
 		return FAIL;
 	}
 	
@@ -27,7 +30,7 @@ int main(void)
 	int b = getB();
 
 	int operationCode = 0;
-	printf("Enter 1 to encode, 2 to decode and 3 to exit: ");
+	printf("Введите 1 для шифрования, 2 для дешифрования и любую другую клавишу для выхода: ");
 	scanf("%i", &operationCode);
 	switch (operationCode)
 	{
@@ -41,28 +44,15 @@ int main(void)
 	return 0;
 }
 
-char* getSrcFileName()
+char* getFileName()
 {
 	char* fileName = (char*)calloc(LEN, sizeof(char));
 	if (!fileName)
 	{
-		printf("ERROR: memory allocation problem.\n");
+		printf("Произошла ошибка при выделении памяти.\n");
 		return NULL;
 	}
-	printf("Enter name of file with source code (up to 255 characters):\n");
-	scanf_s(LEN_CODE, fileName, LEN);
-	return fileName;
-}
 
-char* getResFileName()
-{
-	char* fileName = (char*)calloc(LEN, sizeof(char));
-	if (!fileName)
-	{
-		printf("ERROR: memory allocation problem.\n");
-		return NULL;
-	}
-	printf("Enter name of file for result saving (up to 255 characters):\n");
 	scanf_s(LEN_CODE, fileName, LEN);
 	return fileName;
 }
@@ -70,11 +60,11 @@ char* getResFileName()
 int getA()
 {
 	int a = 0;
-	printf("Enter coefficient a for encrypting with formula (a*letter + b) mod m: ");
+	printf("Введите коэффициент a для шифрования по формуле (a*letter + b) mod m: ");
 	scanf("%i", &a);
 	while (a < 1 || a >= M || getNOD(a, M) != 1)
 	{
-		printf("Incorrect a. NOD(a, m) must be 1, where m = 32. Also a can't be less than 1 and greater than m-1.");
+		printf("Некорректное a. НОД(a, m) должен быть 1, где m = 32. Также a не может быть меньше 1 и больше чем m-1.");
 		scanf("%i", &a);
 	}
 	return a;
@@ -96,11 +86,11 @@ int getNOD(int n1, int n2)
 int getB()
 {
 	int b = 0;
-	printf("Enter coefficient b for encrypting with formula (a*letter + b) mod m: ");
+	printf("Введите коэффициент b для шифрования по формуле (a*letter + b) mod m: ");
 	scanf("%i", &b);
 	while (b < 0 || b >= M)
 	{
-		printf("Incorrect b: it can't be less than 0 and greater than m-1.");
+		printf("Некорректное b: он не может быть меньше чем 0 и больше чем m-1.");
 		scanf("%i", &b);
 	}
 	return b;
