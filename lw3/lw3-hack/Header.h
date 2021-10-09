@@ -12,6 +12,7 @@
 #define ALPHABET_SIZE 32
 #define NO_LETTERS '\0'
 #define END_OF_OPTIONS -1
+#define NUM_OF_WORD_TO_ANALIZE 20
 
 void setNextA(cryptogram_t* data);
 void setNextB(cryptogram_t* data);
@@ -30,6 +31,7 @@ bool_t isRussianLowercaseLetter(char item);
 bool_t isLetter(char item);
 
 char* getFileName();
+void handleMainCycle(cryptogram_t* data);
 
 void initText(cryptogram_t* data, FILE* f, char* dataPath);
 void saveDataFromString(cryptogram_t* data, char* str);

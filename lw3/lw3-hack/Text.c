@@ -1,7 +1,6 @@
 #include "Header.h"
 
-void initText(cryptogram_t* data, FILE* f, char* dataPath)
-{
+void initText(cryptogram_t* data, FILE* f, char* dataPath) {
 	fclose(f);
 	f = fopen(dataPath, "r");
 	if (f == NULL) return;
@@ -9,8 +8,7 @@ void initText(cryptogram_t* data, FILE* f, char* dataPath)
 	char* temp = (char*)calloc(fileSize, sizeof(char));
 	if (temp == NULL) return NULL;
 	data->text = (char*)calloc(fileSize, sizeof(char));
-	if (data->text == NULL)
-	{
+	if (data->text == NULL) {
 		temp = NULL;
 		free(temp);
 		return NULL;
@@ -19,13 +17,11 @@ void initText(cryptogram_t* data, FILE* f, char* dataPath)
 	free(temp);
 }
 
-void saveDataFromString(cryptogram_t* data, char* str)
-{
+void saveDataFromString(cryptogram_t* data, char* str) {
 	char* sav = data->text;
 	while (*(data->text)) data->text++;
 	
-	while (*str)
-	{
+	while (*str) {
 		*(data->text) = *str;
 		(data->text)++;
 		str++;
@@ -35,20 +31,17 @@ void saveDataFromString(cryptogram_t* data, char* str)
 	data->text = sav;
 }
 
-void printText(cryptogram_t* data)
-{
+void printText(cryptogram_t* data) {
 	printf("Текст криптограммы с выполненными заменами:\n\n");
 	char* ptr = data->text;
-	while (*ptr)
-	{
+	while (*ptr) {
 		printf("%c", getDecodedLetter(*ptr, data->decodeDictionary));
 		ptr++;
 	}
 	printf("\n\n");
 }
 
-long int getFileSize(FILE* f)
-{
+long int getFileSize(FILE* f) {
 	long int sav = ftell(f);
 	fseek(f, 0L, SEEK_END);
 	long int fileSize = ftell(f);

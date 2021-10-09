@@ -1,7 +1,6 @@
 #include "Header.h"
 
-cryptogram_t* initCryptogram(char* dataPath)
-{
+cryptogram_t* initCryptogram(char* dataPath) {
 	cryptogram_t* data = (cryptogram_t*)malloc(sizeof(cryptogram_t));
 	if (data == NULL) return NULL;
 
@@ -13,8 +12,7 @@ cryptogram_t* initCryptogram(char* dataPath)
 	}
 
 	FILE* f = fopen(dataPath, "r");
-	if ((f == NULL) || (fgetc(f) == EOF) || (feof(f))) 
-	{
+	if ((f == NULL) || (fgetc(f) == EOF) || (feof(f))) {
 		data->decodeDictionary = NULL;
 		free(data->decodeDictionary);
 		data = NULL;
@@ -24,8 +22,7 @@ cryptogram_t* initCryptogram(char* dataPath)
 
 	initText(data, f, dataPath);
 	
-	if (f != NULL)
-	{
+	if (f != NULL) {
 		fclose(f);
 	}
 	
@@ -40,15 +37,13 @@ cryptogram_t* initCryptogram(char* dataPath)
 	return data;
 }
 
-void printCryptogram(cryptogram_t* data)
-{
+void printCryptogram(cryptogram_t* data) {
 	system("cls");
 	printEncryptionKey(data);
 	printText(data);
 }
 
-void cleanMemory(cryptogram_t* data)
-{
+void cleanMemory(cryptogram_t* data) {
 	cleanWordsList(data);
 
 	data->text = NULL;

@@ -1,7 +1,6 @@
 #include "Header.h"
 
-void updateDecodeDictionary(cryptogram_t* data)
-{
+void updateDecodeDictionary(cryptogram_t* data) {
 	int a = data->aCoefficient;
 	int b = data->bCoefficient;
 
@@ -11,14 +10,11 @@ void updateDecodeDictionary(cryptogram_t* data)
 	}
 }
 
-char getDecodedLetter(char ch, int decodeDictionary[ALPHABET_SIZE])
-{
-	if (isRussianCapitalLetter(ch))
-	{
+char getDecodedLetter(char ch, int decodeDictionary[ALPHABET_SIZE]) {
+	if (isRussianCapitalLetter(ch)) {
 		return decodeDictionary[ch - 'À'] + 'À';
 	}
-	if (isRussianLowercaseLetter(ch))
-	{
+	if (isRussianLowercaseLetter(ch)) {
 		return decodeDictionary[ch - 'à'] + 'à';
 	}
 	return ch;
